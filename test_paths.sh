@@ -1,3 +1,4 @@
+
 #!/bin/bash
 # Test script to verify the fixed get_feature_paths function
 
