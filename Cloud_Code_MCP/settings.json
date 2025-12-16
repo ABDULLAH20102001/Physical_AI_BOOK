@@ -1,0 +1,46 @@
+
+{
+  "mcp": {
+    "servers": [
+      {
+        "name": "github",
+        "transport": "http",
+        "url": "${GITHUB_MCP_URL}",
+        "headers": {
+          "Authorization": "Bearer ${GITHUB_ACCESS_TOKEN}",
+          "Content-Type": "application/json"
+        },
+        "config": {
+          "owner": "${GITHUB_OWNER}",
+          "repo": "${GITHUB_REPO}"
+        },
+        "enabled": true,
+        "scope": "project"
+      },
+      {
+        "name": "context7",
+        "transport": "http",
+        "url": "${CONTEXT7_MCP_URL}",
+        "headers": {
+          "Authorization": "Bearer ${CONTEXT7_API_KEY}",
+          "Content-Type": "application/json"
+        },
+        "config": {
+          "projectId": "${CONTEXT7_PROJECT_ID}",
+          "environment": "${CONTEXT7_ENVIRONMENT}"
+        },
+        "enabled": true,
+        "scope": "project"
+      }
+    ],
+    "outputLimits": {
+      "warningThreshold": 10000,
+      "maxTokens": 25000
+    },
+    "debug": false
+  },
+  "claudeCode": {
+    "mcpEnabled": true,
+    "autoConnect": true
+  }
+}

@@ -1,0 +1,382 @@
+# OpenAPI Contract: Physical AI & Humanoid Robotics API
+
+openapi: 3.0.1
+info:
+  title: Physical AI & Humanoid Robotics API
+  description: API for the Physical AI & Humanoid Robotics book project with MCP-grounded content and RAG chatbot
+  version: 1.0.0
+  contact:
+    name: Panaversity Development Team
+    url: https://panaversity.org
+    email: contact@panaversity.org
+
+servers:
+  - url: https://api.physical-ai-book.com/v1
+    description: Production server
+  - url: https://staging-api.physical-ai-book.com/v1
+    description: Staging server
+  - url: http://localhost:8000/v1
+    description: Development server
+
+paths:
+  /chapters:
+    get:
+      summary: Get all book chapters
+      description: Retrieve a list of all 12 book chapters with metadata
+      operationId: getChapters
+      tags:
+        - chapters
+      parameters:
+        - name: limit
+          in: query
+          description: Maximum number of chapters to return
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 12
+            default: 12
+        - name: offset
+          in: query
+          description: Number of chapters to skip
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          description: List of chapters
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  chapters:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Chapter'
+                  total:
+                    type: integer
+                    description: Total number of chapters
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /chapters/{chapterNumber}:
+    get:
+      summary: Get a specific chapter
+      description: Retrieve a specific chapter by its number (1-12)
+      operationId: getChapter
+      tags:
+        - chapters
+      parameters:
+        - name: chapterNumber
+          in: path
+          required: true
+          description: Chapter number (1-12)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 12
+      responses:
+        '200':
+          description: Chapter content and metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Chapter'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /rag/query:
+    post:
+      summary: Query the RAG chatbot
+      description: Submit a query to the RAG system for response based on book content
+      operationId: queryRag
+      tags:
+        - rag
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+              properties:
+                query:
+                  type: string
+                  description: The user's question/query
+                  example: "What is Physical AI?"
+                context:
+                  type: string
+                  description: Optional context to help with the query
+                  example: "I'm a beginner in robotics"
+      responses:
+        '200':
+          description: RAG response to the query
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RagResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+  /validate/content:
+    post:
+      summary: Validate content against MCP
+      description: Validate content to ensure it's grounded in MCP documentation and compliant with scope
+      operationId: validateContent
+      tags:
+        - validation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - content
+              properties:
+                content:
+                  type: string
+                  description: The content to validate
+                contentType:
+                  type: string
+                  description: Type of content being validated
+                  enum: [chapter, code_example, explanation]
+      responses:
+        '200':
+          description: Validation results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+
+components:
+  schemas:
+    Chapter:
+      type: object
+      required:
+        - id
+        - title
+        - chapter_number
+        - content
+        - learning_objectives
+        - status
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the chapter
+        title:
+          type: string
+          description: Title of the chapter
+        slug:
+          type: string
+          description: URL-friendly version of the title
+        chapter_number:
+          type: integer
+          minimum: 1
+          maximum: 12
+          description: Chapter number in the book (1-12)
+        content:
+          type: string
+          description: Markdown content of the chapter
+        learning_objectives:
+          type: array
+          items:
+            type: string
+          description: List of learning objectives for this chapter
+        code_examples:
+          type: array
+          items:
+            $ref: '#/components/schemas/CodeExample'
+        diagrams:
+          type: array
+          items:
+            $ref: '#/components/schemas/Diagram'
+        exercises:
+          type: array
+          items:
+            $ref: '#/components/schemas/Exercise'
+        created_at:
+          type: string
+          format: date-time
+          description: When the chapter was created
+        updated_at:
+          type: string
+          format: date-time
+          description: When the chapter was last updated
+        status:
+          type: string
+          enum: [draft, review, published]
+          description: Current status of the chapter
+
+    CodeExample:
+      type: object
+      required:
+        - language
+        - code
+      properties:
+        language:
+          type: string
+          description: Programming language of the example
+        code:
+          type: string
+          description: The actual code
+        description:
+          type: string
+          description: Explanation of what the code does
+
+    Diagram:
+      type: object
+      required:
+        - title
+        - file_path
+      properties:
+        title:
+          type: string
+          description: Title of the diagram
+        description:
+          type: string
+          description: Explanation of the diagram
+        file_path:
+          type: string
+          description: Path to the diagram file
+
+    Exercise:
+      type: object
+      required:
+        - question
+        - type
+      properties:
+        question:
+          type: string
+          description: The exercise question
+        type:
+          type: string
+          description: Type of exercise (e.g., multiple_choice, coding, essay)
+        difficulty:
+          type: string
+          enum: [beginner, intermediate, advanced]
+          description: Difficulty level of the exercise
+
+    RagResponse:
+      type: object
+      required:
+        - response
+        - source_chapters
+        - is_hallucinated
+      properties:
+        response:
+          type: string
+          description: The chatbot's response to the query
+        source_chapters:
+          type: array
+          items:
+            type: string
+          description: List of chapter slugs that provided the information
+        is_hallucinated:
+          type: boolean
+          description: Whether the response contains hallucinated information
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Confidence level of the response
+        query:
+          type: string
+          description: The original query that was submitted
+
+    ValidationResult:
+      type: object
+      required:
+        - is_valid
+        - issues
+      properties:
+        is_valid:
+          type: boolean
+          description: Whether the content passed validation
+        issues:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationIssue'
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: Confidence in the validation result
+
+    ValidationIssue:
+      type: object
+      required:
+        - type
+        - message
+        - severity
+      properties:
+        type:
+          type: string
+          enum: [scope_violation, technical_inaccuracy, hallucination, formatting]
+          description: Type of validation issue
+        message:
+          type: string
+          description: Description of the issue
+        severity:
+          type: string
+          enum: [low, medium, high, critical]
+          description: Severity level of the issue
+        suggested_fix:
+          type: string
+          description: Suggested way to fix the issue
+
+  responses:
+    BadRequest:
+      description: Bad request - invalid input parameters
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+
+    InternalServerError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+              message:
+                type: string
+
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: JWT token for authentication

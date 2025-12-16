@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init)",
+      "Bash(cat README.md)",
+      "Bash(git add README.md)",
+      "Bash(git commit -m \"Add content from source repository\")",
+      "Bash(rm -rf temp_source_repo)",
+      "Bash(.specify/scripts/bash/check-prerequisites.sh --json --require-tasks --include-tasks)",
+      "Bash(source .specify/scripts/bash/common.sh)",
+      "Bash(get_feature_paths)",
+      "Bash(npm install)"
+    ]
+  }
+}

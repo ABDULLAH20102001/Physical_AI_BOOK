@@ -1,0 +1,384 @@
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.heroBanner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  color: white;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+}
+
+.heroContent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.heroText {
+  flex: 1;
+  text-align: left;
+}
+
+.heroText h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, #00dbde, #fc00ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.heroText .hero__subtitle {
+  font-size: 1.5rem;
+  color: #e0e0e0;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.heroButtons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.heroVisual {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.robotVisual {
+  width: 300px;
+  height: 300px;
+  background: linear-gradient(45deg, rgba(0, 219, 222, 0.1), rgba(252, 0, 255, 0.1));
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 60px rgba(0, 219, 222, 0.3),
+    0 0 100px rgba(252, 0, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  animation: float 6s ease-in-out infinite;
+}
+
+.robotVisual::before {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 219, 222, 0.2) 0%, transparent 70%);
+  border: 1px solid rgba(0, 219, 222, 0.3);
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+.section {
+  padding: 6rem 0;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.sectionTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #1a1a1a;
+}
+
+.darkSection .sectionTitle {
+  color: white;
+}
+
+.sectionSubtitle {
+  font-size: 1.2rem;
+  color: #666;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.darkSection .sectionSubtitle {
+  color: #ccc;
+}
+
+.aboutGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.aboutCard {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.aboutCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.darkSection .aboutCard {
+  background: #2a2a3a;
+  color: white;
+}
+
+.aboutCard h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #00dbde;
+}
+
+.darkSection .aboutCard h3 {
+  color: #00dbde;
+}
+
+.valueGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem;
+}
+
+.valueItem {
+  text-align: center;
+  padding: 2rem;
+}
+
+.valueIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.valueItem h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #fc00ff;
+}
+
+.darkSection .valueItem h3 {
+  color: #00dbde;
+}
+
+.curriculumGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.curriculumItem {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  border-left: 4px solid #00dbde;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.curriculumItem:hover {
+  transform: translateX(5px);
+}
+
+.darkSection .curriculumItem {
+  background: #2a2a3a;
+  color: white;
+  border-left-color: #fc00ff;
+}
+
+.curriculumIndex {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.1);
+}
+
+.darkSection .curriculumIndex {
+  color: rgba(255, 255, 255, 0.1);
+}
+
+.curriculumItem h3 {
+  margin-bottom: 0.5rem;
+  color: #1a1a1a;
+}
+
+.darkSection .curriculumItem h3 {
+  color: white;
+}
+
+.techGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.techItem h3 {
+  margin-bottom: 1rem;
+  color: #00dbde;
+}
+
+.darkSection .techItem h3 {
+  color: #00dbde;
+}
+
+.techTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.techTag {
+  background: rgba(0, 219, 222, 0.1);
+  color: #00dbde;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  border: 1px solid rgba(0, 219, 222, 0.3);
+}
+
+.darkSection .techTag {
+  background: rgba(252, 0, 255, 0.1);
+  color: #fc00ff;
+  border-color: rgba(252, 0, 255, 0.3);
+}
+
+.communityGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.communityCard {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.communityCard:hover {
+  transform: translateY(-5px);
+}
+
+.darkSection .communityCard {
+  background: #2a2a3a;
+  color: white;
+}
+
+.communityCard h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #fc00ff;
+}
+
+.darkSection .communityCard h3 {
+  color: #00dbde;
+}
+
+.ctaSection {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  color: white;
+  text-align: center;
+}
+
+.ctaContent {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ctaTitle {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, #00dbde, #fc00ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ctaSubtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #e0e0e0;
+}
+
+.ctaButtons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.darkSection {
+  background-color: #1a1a2e;
+  color: white;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .heroContent {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .heroText h1 {
+    font-size: 2.5rem;
+  }
+
+  .heroButtons {
+    justify-content: center;
+  }
+
+  .section {
+    padding: 4rem 0;
+  }
+
+  .sectionTitle {
+    font-size: 2rem;
+  }
+
+  .ctaButtons {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* Button outline variant */
+.button--outline {
+  background: transparent !important;
+  border: 2px solid currentColor !important;
+  color: currentColor !important;
+}
+
+.button--outline:hover {
+  background: currentColor !important;
+  color: white !important;
+}
