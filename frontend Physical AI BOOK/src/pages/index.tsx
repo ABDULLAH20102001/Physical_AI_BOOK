@@ -28,7 +28,7 @@ function HomepageHeader() {
               </Link>
               <Link
                 className="button button--primary button--outline button--lg"
-                to="/docs/01-introduction-to-physical-ai/intro-to-physical-ai">
+                to="/docs/introduction-to-physical-ai/intro-to-physical-ai">
                 Read the Book
               </Link>
             </div>
@@ -266,15 +266,15 @@ function CommunitySection() {
           <div className={styles.communityCard}>
             <h3>Learning Groups</h3>
             <p>Join study groups and collaborative learning sessions</p>
-            <Link className="button button--primary button--sm" to="/community">
-              Find a Group
+            <Link className="button button--primary button--sm" to="/blog">
+              Read Our Blog
             </Link>
           </div>
           <div className={styles.communityCard}>
             <h3>Project Showcase</h3>
             <p>Share your creations and get feedback from experts</p>
-            <Link className="button button--primary button--sm" to="/showcase">
-              Share Your Work
+            <Link className="button button--primary button--sm" href="https://github.com/ABDULLAH20102001/Physical_AI_BOOK">
+              View on GitHub
             </Link>
           </div>
         </div>
@@ -302,7 +302,7 @@ function FinalCTASection() {
             </Link>
             <Link
               className="button button--secondary button--outline button--lg"
-              to="/contact">
+              href="https://github.com/ABDULLAH20102001/Physical_AI_BOOK/issues">
               Contact Us
             </Link>
           </div>
